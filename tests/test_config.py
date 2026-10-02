@@ -25,9 +25,7 @@ class SettingsTests(unittest.TestCase):
         self.assertEqual(settings.log_level, "INFO")
 
     def test_loads_env_file(self) -> None:
-        self.env_file.write_text(
-            "APP_ENV=staging\nLOG_LEVEL=DEBUG\n", encoding="utf-8"
-        )
+        self.env_file.write_text("APP_ENV=staging\nLOG_LEVEL=DEBUG\n", encoding="utf-8")
         settings = Settings(_env_file=self.env_file)
         self.assertEqual(settings.app_env, "staging")
         self.assertEqual(settings.log_level, "DEBUG")
@@ -57,7 +55,14 @@ class SettingsTests(unittest.TestCase):
 
     def test_supported_log_levels(self) -> None:
         for level in (
-            "CRITICAL", "FATAL", "ERROR", "WARNING", "WARN", "INFO", "DEBUG", "NOTSET"
+            "CRITICAL",
+            "FATAL",
+            "ERROR",
+            "WARNING",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "NOTSET",
         ):
             with self.subTest(level=level):
                 with patch.dict(os.environ, {"LOG_LEVEL": level}):

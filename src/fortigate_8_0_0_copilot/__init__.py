@@ -8,7 +8,6 @@ def main() -> None:
     print(f"(environment={settings.app_env}, log_level={settings.log_level})")
 
 
-
 """Only start the program if this file is being used as the program's entry point."""
 if __name__ == "__main__":
     main()
