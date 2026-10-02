@@ -1,0 +1,23 @@
+# Git history
+.git/
+
+# Local Python environment
+.venv/
+
+# Python-generated files and tool caches
+**/__pycache__/
+**/*.py[cod]
+.ruff_cache/
+.pytest_cache/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Local documents, downloads, and generated output
+data/
+models/
+logs/
+dist/
+build/
