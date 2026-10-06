@@ -17,8 +17,8 @@ app = FastAPI(debug=False)
 logger = logging.getLogger(__name__)
 
 
-
 """This middleware assigns a request ID to each incoming HTTP request."""
+
 
 @app.middleware("http")
 async def add_request_id(
@@ -29,17 +29,14 @@ async def add_request_id(
     return await call_next(request)
 
 
-
 @app.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-
-
-
 """It accepts a JSON request, validates that JSON using ChatRequest, has access to the current HTTP Request, and returns a ChatResponse. 
 """
+
 
 @app.post(
     "/chat",
@@ -65,8 +62,6 @@ async def chat(
     )
 
 
-
-
 """When request validation fails, FastAPI raises RequestValidationError. Registering a handler for that exception lets you replace FastAPI’s default validation response with your chosen format.
 This handler:
 - Reads the first validation problem.
@@ -74,8 +69,6 @@ This handler:
 - Builds an ErrorResponse.
 - Sends it with HTTP status 422.
 """
-
-
 
 
 @app.exception_handler(RequestValidationError)
@@ -112,9 +105,6 @@ async def validation_error_handler(
     )
 
 
-
-
-
 @app.exception_handler(Exception)
 async def unexpected_error_handler(
     request: Request,
@@ -138,5 +128,3 @@ async def unexpected_error_handler(
         status_code=500,
         content=body.model_dump(mode="json"),
     )
-
-
