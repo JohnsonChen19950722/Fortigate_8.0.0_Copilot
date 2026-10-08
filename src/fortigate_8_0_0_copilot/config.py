@@ -13,6 +13,7 @@ Finally, create one settings object that the rest of my application can import.
 from pathlib import Path
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,7 +23,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
-
+    backend_base_url: str = "http://127.0.0.1:8000"
+    backend_timeout_seconds: float = Field(default=10.0, gt=0)
     app_env: str = "development"
     log_level: Literal[
         "CRITICAL", "FATAL", "ERROR", "WARNING", "WARN", "INFO", "DEBUG", "NOTSET"

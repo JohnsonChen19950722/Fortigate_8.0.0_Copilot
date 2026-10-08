@@ -1,5 +1,6 @@
 
-from collections.abc import Awaitable, Callable
+import logging
+from time import perf_counter
 from uuid import uuid4
 
 from fastapi import FastAPI, Request, Response
@@ -7,25 +8,14 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import RequestResponseEndpoint
 
-
-
+from fortigate_8_0_0_copilot.logging_config import configure_logging
 from fortigate_8_0_0_copilot.schemas import (
     ChatRequest,
     ChatResponse,
     ErrorDetail,
     ErrorResponse,
 )
-
 from fortigate_8_0_0_copilot.workflow import WorkflowState, graph
-
-
-import logging
-from fortigate_8_0_0_copilot.logging_config import configure_logging
-from time import perf_counter
-from uuid import uuid4
-
-
-
 
 app = FastAPI(debug=False)
 
