@@ -3,7 +3,7 @@ from collections.abc import Iterator
 import pytest
 from fastapi.testclient import TestClient
 
-from fortigate_copilot.api import app
+from fortigate_8_0_0_copilot.api import app
 
 
 @pytest.fixture

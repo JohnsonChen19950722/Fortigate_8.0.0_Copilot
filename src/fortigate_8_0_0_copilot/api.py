@@ -1,4 +1,3 @@
-
 import logging
 from time import perf_counter
 from uuid import uuid4
@@ -22,8 +21,6 @@ app = FastAPI(debug=False)
 configure_logging()
 logger = logging.getLogger(__name__)
 logger.info("Backend started")
-
-
 
 
 @app.middleware("http")
@@ -52,15 +49,12 @@ async def add_request_context(
 
     response = await call_next(request)
 
-    duration_ms = (
-        perf_counter() - request.state.started_at
-    ) * 1_000
+    duration_ms = (perf_counter() - request.state.started_at) * 1_000
 
     response.headers["X-Request-ID"] = request_id
 
     logger.info(
-        "event=request_finished request_id=%s "
-        "status_code=%s duration_ms=%.2f",
+        "event=request_finished request_id=%s status_code=%s duration_ms=%.2f",
         request_id,
         response.status_code,
         duration_ms,
@@ -93,7 +87,6 @@ async def health() -> dict[str, str]:
         },
     },
 )
-
 async def chat(
     payload: ChatRequest,
     request: Request,
@@ -122,9 +115,7 @@ async def chat(
 
     result = await graph.ainvoke(initial_state)
 
-    workflow_duration_ms = (
-        perf_counter() - workflow_started_at
-    ) * 1_000
+    workflow_duration_ms = (perf_counter() - workflow_started_at) * 1_000
 
     logger.info(
         "event=workflow_completed request_id=%s duration_ms=%.2f",
@@ -136,10 +127,6 @@ async def chat(
         request_id=request_id,
         answer=result["answer"],
     )
-
-
-
-
 
 
 @app.exception_handler(RequestValidationError)
@@ -176,11 +163,11 @@ async def validation_error_handler(
             message=message,
         ),
     )
-    
+
     logger.warning(
-    "event=request_rejected request_id=%s status_code=422",
-    request.state.request_id,
-)
+        "event=request_rejected request_id=%s status_code=422",
+        request.state.request_id,
+    )
     return JSONResponse(
         status_code=422,
         content=body.model_dump(mode="json"),
@@ -202,13 +189,10 @@ async def unexpected_error_handler(
     """
     request_id = request.state.request_id
 
-    duration_ms = (
-        perf_counter() - request.state.started_at
-    ) * 1_000
+    duration_ms = (perf_counter() - request.state.started_at) * 1_000
 
     logger.error(
-        "event=request_failed request_id=%s "
-        "status_code=500 duration_ms=%.2f",
+        "event=request_failed request_id=%s status_code=500 duration_ms=%.2f",
         request_id,
         duration_ms,
         exc_info=exc,
