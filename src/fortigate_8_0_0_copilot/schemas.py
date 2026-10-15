@@ -18,13 +18,3 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     request_id: str
     answer: str
-
-
-class ErrorDetail(BaseModel):
-    code: str
-    message: str
-
-
-class ErrorResponse(BaseModel):
-    request_id: str
-    error: ErrorDetail
